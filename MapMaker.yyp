@@ -33,6 +33,7 @@
     {"id":{"name":"spr_tanks1","path":"sprites/spr_tanks1/spr_tanks1.yy",},"order":6,},
     {"id":{"name":"spr_ifvs1","path":"sprites/spr_ifvs1/spr_ifvs1.yy",},"order":1,},
     {"id":{"name":"spr_unit_options","path":"sprites/spr_unit_options/spr_unit_options.yy",},"order":27,},
+    {"id":{"name":"vision_ai","path":"scripts/vision_ai/vision_ai.yy",},"order":0,},
     {"id":{"name":"spr_button_edit","path":"sprites/spr_button_edit/spr_button_edit.yy",},"order":0,},
     {"id":{"name":"spr_button_play","path":"sprites/spr_button_play/spr_button_play.yy",},"order":1,},
     {"id":{"name":"font_menu_text2","path":"fonts/font_menu_text2/font_menu_text2.yy",},"order":3,},
@@ -52,6 +53,7 @@
     {"id":{"name":"formation_functions","path":"scripts/formation_functions/formation_functions.yy",},"order":17,},
     {"id":{"name":"spr_soldier_generate","path":"sprites/spr_soldier_generate/spr_soldier_generate.yy",},"order":18,},
     {"id":{"name":"bgm","path":"sounds/bgm/bgm.yy",},"order":0,},
+    {"id":{"name":"general_ai","path":"scripts/general_ai/general_ai.yy",},"order":22,},
     {"id":{"name":"array","path":"scripts/array/array.yy",},"order":1,},
     {"id":{"name":"debug","path":"scripts/debug/debug.yy",},"order":2,},
     {"id":{"name":"init_map","path":"scripts/init_map/init_map.yy",},"order":1,},
@@ -138,10 +140,10 @@
     "name": "Default",
     "children": [],
   },
-  "RoomOrder": [
-    {"name":"rm_start_screen","path":"rooms/rm_start_screen/rm_start_screen.yy",},
-    {"name":"rm_map","path":"rooms/rm_map/rm_map.yy",},
-    {"name":"rm_info","path":"rooms/rm_info/rm_info.yy",},
+  "RoomOrderNodes": [
+    {"roomId":{"name":"rm_start_screen","path":"rooms/rm_start_screen/rm_start_screen.yy",},},
+    {"roomId":{"name":"rm_map","path":"rooms/rm_map/rm_map.yy",},},
+    {"roomId":{"name":"rm_info","path":"rooms/rm_info/rm_info.yy",},},
   ],
   "Folders": [
     {"folderPath":"folders/Sprites.yy","order":0,"resourceVersion":"1.0","name":"Sprites","tags":[],"resourceType":"GMFolder",},
@@ -171,18 +173,19 @@
     {"folderPath":"folders/Sprites/outline.yy","order":28,"resourceVersion":"1.0","name":"outline","tags":[],"resourceType":"GMFolder",},
     {"folderPath":"folders/Scripts/soldier/unit_options.yy","order":11,"resourceVersion":"1.0","name":"unit_options","tags":[],"resourceType":"GMFolder",},
     {"folderPath":"folders/Scripts/obj_tile.click.yy","order":19,"resourceVersion":"1.0","name":"obj_tile.click","tags":[],"resourceType":"GMFolder",},
+    {"folderPath":"folders/Scripts/AI helper.yy","order":21,"resourceVersion":"1.0","name":"AI helper","tags":[],"resourceType":"GMFolder",},
   ],
   "AudioGroups": [
     {"targets":461609314234257646,"resourceVersion":"1.0","name":"audiogroup_default","resourceType":"GMAudioGroup",},
   ],
   "TextureGroups": [
-    {"isScaled":true,"autocrop":true,"border":2,"mipsToGenerate":0,"targets":461609314234257646,"resourceVersion":"1.0","name":"Default","resourceType":"GMTextureGroup",},
+    {"isScaled":true,"autocrop":true,"border":2,"mipsToGenerate":0,"groupParent":null,"targets":461609314234257646,"resourceVersion":"1.0","name":"Default","resourceType":"GMTextureGroup",},
   ],
   "IncludedFiles": [],
   "MetaData": {
-    "IDEVersion": "2.3.0.529",
+    "IDEVersion": "2.3.1.536",
   },
-  "resourceVersion": "1.3",
+  "resourceVersion": "1.4",
   "name": "MapMaker",
   "tags": [],
   "resourceType": "GMProject",
