@@ -1,4 +1,4 @@
-
+// finished updating global selected soldier
 
 // return if tileId is a possible attack for selected soldier or not
 // can't see through fog
@@ -12,7 +12,7 @@ function possible_attack_tiles(tileId) {
 	
 	for (var i=0; i<array_length(targets); i++){
 		var oth = variable_instance_get(s, targets[i]);
-		if (oth != -1 && oth.team != global.selectedSoldier.soldier.team)
+		if (oth != -1 && oth.team != global.selectedSoldier.team)
 			return true;
 	}
 
@@ -25,21 +25,47 @@ function return_true(tileId){
 
 
 
-// call this from the tile that you want to initiate attacking from
 // returns if an attack is found or not
-function soldier_init_attack() {
+function soldier_init_attack(attack_cond) {
 	var found = false;
 
+	if (attack_cond == undefined)
+		attack_cond = possible_attack_tiles;
+		
 	if (global.selectedSoldier != -1){
 
-		var p = pos;
+		var p = global.selectedSoldier.tilePos.pos;
 	
 
-		with (global.selectedSoldier.soldier){
+		with (global.selectedSoldier){
 			if (can-attackCost>=0){
 				
-				// soldier_erase_attack();
-				global.poss_attacks = get_tiles_from_euclidean(p, attack_range);
+				// find possible attack tiles
+				var num_soldiers = instance_number(obj_infantry);
+				if (attack_range*attack_range*4 < num_soldiers)
+					global.poss_attacks = get_tiles_from_euclidean(p, attack_range, attack_cond);
+				else {
+					
+					global.poss_attacks = [];
+					var cur_x = tilePos.pos % global.mapWidth;
+					var cur_y = floor(tilePos.pos / global.mapHeight);
+					
+					with (obj_infantry) {
+						if (is_active) {
+							
+							var test_x = tilePos.pos % global.mapWidth;
+							var test_y = floor(tilePos.pos / global.mapHeight);
+						
+							if (attack_cond(tilePos.pos) &&
+								(cur_x-test_x)*(cur_x-test_x) + (cur_y-test_y)*(cur_y-test_y) <= other.attack_range*other.attack_range) {
+							
+								global.poss_attacks[array_length(global.poss_attacks)] = tilePos;
+							}
+						}
+					}
+					
+				}
+				
 				for (var i=0; i<array_length(global.poss_attacks); i++){
 					global.poss_attacks[i].possible_attack = true;
 					found  = true;

@@ -5,7 +5,9 @@ event_inherited();
 
 mouseIn = false;
 soldier = -1;					// the soldier instance that is in this position
-
+planeArr = [];					// array of plane instances that are in this position
+								// constantly altered, so may include -1's (empty slots)
+	
 
 possible_path = 0;			// this tile is along the current selected path
 possible_pathpoint = false;		// this tile is selected as one of the key points of the path

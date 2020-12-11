@@ -1,14 +1,11 @@
 /// @description handle double click event
 
-//debug("double clicked tile ", pos);
-
-//exit;
 // clear the selected soldier things if this block is not a possible move or attack
 if (global.selectedSoldier != -1){
 	
-	if (global.selectedSoldier.soldier.formation != -1){ 
+	if (global.selectedSoldier.formation != -1){ 
 		
-		var sS = global.selectedSoldier,
+		var sS = global.selectedSoldier.tilePos,
 			formId = sS.soldier.formation,
 			form = global.formation[formId],
 			dR = getRow(pos) - getRow(sS.pos), dC = getCol(pos) - getCol (sS.pos),
@@ -36,20 +33,35 @@ if (global.selectedSoldier != -1){
 		
 	} else if (possible_move || possible_path) {  
 		var path = [];
+		var pathpoints = [];	// store pathpoints (for recon planes)
 		
 		for (var i = 0; i <= array_length(global.poss_paths)-2; i++)
 			path[array_length(path)] = global.poss_paths[i];
 			
 		while (!ds_stack_empty(global.selectedPathpointsStack)) {
 			var cur = ds_stack_pop(global.selectedPathpointsStack);
+			
+			path[array_length(path)] = cur[0];
+			if (cur[0].possible_pathpoint || cur[0] == id)
+				pathpoints[array_length(pathpoints)] = cur[0];
+				
 			cur[0].possible_path = 0;
 			cur[0].possible_pathpoint = false;
-			path[array_length(path)] = cur[0];
 		}
 		
 		
-		with (global.selectedSoldier.soldier){	
-			if (array_length(path)>=1 ) {
+		with (global.selectedSoldier){	
+			if (is_plane(id)) {
+				
+				var pathSize = array_length(pathpoints);
+				planePath = array_create(pathSize);
+				for (var i = pathSize-1; i >= 0; i--)
+					planePath[pathSize-i-1] = pathpoints[i];
+				
+				finalize_deployment(id);
+				
+				
+			} else if (array_length(path)>=1 ) {
 					
 				// if didn't clicked myself again (didn't deselect)
 				if (array_length(path) > 1) {
@@ -59,7 +71,7 @@ if (global.selectedSoldier != -1){
 				var i; // i is index of first soldier encountered or  -1 of none
 				var moveHereCost = 0;
 				for (i = array_length(path)-2; i>=0; i--){
-					if (path[i].soldier!=-1 && path[i] != global.selectedSoldier) break;	
+					if (path[i].soldier!=-1 && path[i] != global.selectedSoldier.tilePos) break;	
 					moveHereCost += global.energy[unit_id][get_tile_type(path[i])];
 				}
 				
@@ -89,8 +101,8 @@ if (global.selectedSoldier != -1){
 				if (error) i++;
 				
 				
-				soldier_execute_move(global.selectedSoldier.pos,  path[i+1].pos, direction);
-				global.selectedSoldier = path[i+1];
+				soldier_execute_move(global.selectedSoldier.tilePos.pos,  path[i+1].pos, direction);
+				// global.selectedSoldier = path[i+1];
 				
 				//clear fog if encountered soldier  (actually moved)
 				if (i != -1) path[i].hide_soldier = false;

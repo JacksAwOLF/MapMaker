@@ -7,15 +7,34 @@ function array() {
 }
 
 
+function remove_from_array(arr, val) {
+	if (arr == -1) 
+		return;
+		
+	for (var i = 0; i < array_length(arr); i++)
+		if (arr[i] == val) 
+			arr[@ i] = -1;
+}
+
+function add_into_array(arr, val) {
+	if (arr == -1) 
+		show_error("Parameter passed into add_an_array is not an array!", false);
+	
+	for (var i = 0; i < array_length(arr); i++) {
+		if (arr[i] == -1) {
+			arr[@ i] = val;
+			return;
+		}
+	}
+	
+	arr[@ array_length(arr)] = val;
+}
 function append(arr, val){
-	//debug("before append", arr, val, !is_array(val));
 	if (!is_array(val)) arr[array_length(arr)] = val;
 	else {
 		for (var i=0; i<array_length(val); i++)
 			arr[array_length(arr)] = val[i]
 	}
-	
-	//debug("after append", arr, val, !is_array(val));
 	return arr;
 }	
 

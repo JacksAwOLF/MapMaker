@@ -3,7 +3,6 @@
 
 
 if (keyboard_check_pressed(hide_key)) {
-	//debug("pressed e");
 	switch(state) {
 		case VisualState.active: 
 		{

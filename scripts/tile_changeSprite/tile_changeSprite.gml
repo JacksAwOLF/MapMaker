@@ -4,9 +4,9 @@ function tile_changeSprite(){
 	if (edit) {
 
 		switch (global.changeSprite){
-	
+
 			case spr_infantry_delete:
-				if (soldier != -1) destroy_soldier(pos);
+				if (soldier != -1) destroy_soldier(soldier);
 				else if (tower != -1){
 					with(tower) instance_destroy();
 					tower = -1;
@@ -17,10 +17,10 @@ function tile_changeSprite(){
 					}
 					originHutPos = -1;
 				}
-			
-			
+
+
 				break;
-	
+
 			case spr_infantry:
 			case spr_tanks:
 			case spr_ifvs:
@@ -34,26 +34,26 @@ function tile_changeSprite(){
 			case spr_seaplane:
 			case spr_seaplane1:
 				if (soldier == -1) {
-					create_soldier(global.changeSprite,  
+					create_soldier(global.changeSprite,
 						pos, -1, true);
 				} else global.changeSprite = -1;
 				break;
-		
+
 			case spr_tile_road:
 				road = !road;
 				break;
-	
+
 
 			case spr_soldier_generate:
 				if (hut!=-1 || tower!=-1) break;
-			
+
 				if (soldier != -1) {
-				
+
 					if (global.hutlimit[soldier.unit_id] == -1){
 						global.changeSprite = -1;
 						break;
 					}
-				
+
 					hut = instance_create_depth(x, y, 0, obj_hut);
 					hut.nuetral = false;
 					with (hut){
@@ -61,12 +61,12 @@ function tile_changeSprite(){
 						sprite_dir = other.soldier.direction;
 						event_user(10);
 					}
-					destroy_soldier(pos);
-				
+					destroy_soldier(soldier);
+
 				}
-	
+
 				else if (soldier == -1){
-				
+
 					hut = instance_create_depth(x, y, 0, obj_hut);
 					with(hut){
 						steps = -1;
@@ -74,14 +74,14 @@ function tile_changeSprite(){
 					}
 					hut.nuetral = true;
 				}
-		
+
 				if (hut != -1){
 					hut.spawnPos = pos;
 					originHutPos = pos;
 				}
 				break;
 
-		
+
 			case spr_tower:
 				tower = instance_create_depth(x, y, 1, obj_tower);
 				tower.team = global.turn%2;

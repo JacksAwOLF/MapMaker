@@ -336,10 +336,13 @@ function init_map(medium, dataSrc) {
 	global.followSoldier = 0; // index of movable soldier to follow 
 	global.shouldFocusTurn = -1; // checks (shouldFocusTurn == this turn) to follow a soldier
 	
+	
+	global.allPlanes = [ds_list_create(), ds_list_create()]; // all planes of both sides
 	global.allSoldiers = [ds_list_create(), ds_list_create()]; // all soldiers of both sides
 	
-	with(obj_infantry)
-		ds_list_add(global.allSoldiers[team], id);
+	with (obj_infantry)
+		if (is_active && !is_plane(id))
+			ds_list_add(global.allSoldiers[team], id);
 		
 	for (var i = 0; i < array_length(global.grid); i++) 
 		if (global.grid[i].soldier != -1)

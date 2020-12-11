@@ -37,6 +37,11 @@ function is_ifv(soldier) {
 			soldier.unit_id == Units.IFV_S);
 }
 
+function is_plane(soldier) {
+	return (soldier.unit_id == Units.BOMBER || soldier.unit_id == Units.RECON ||
+			soldier.unit_id == Units.FIGHTER);
+}
+
 function get_tile_type(tile) {
 	
 	if (tile.road) return Tiles.road;

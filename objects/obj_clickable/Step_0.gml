@@ -2,7 +2,6 @@
 // You can write your code in this editor
 
 if (global.mouseInstanceId == id) {
-	//debug("running event ", global.mouseEventId, " for instance ", instance_id, " of id ", id);
 
 	if (global.mouseEventId == 0)  { // checking for double click
 		if (enableDoubleClick && current_time - prevClickTime <= 300) {

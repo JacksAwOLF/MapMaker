@@ -19,6 +19,7 @@ function init_game_vars(){
 		BOMBER,
 		RECON,
 		FIGHTER,
+		SIZE,
 	};
 	
 	var unit_param = function(unit, max_health, max_damage, attk_range, 
@@ -76,7 +77,7 @@ function init_game_vars(){
 	global.unitSprites[Units.FIGHTER]	= [spr_fighter, spr_fighter1];
 	
 	
-	for (var i = 0; i < Units.END; i++)
+	for (var i = 0; i < Units.SIZE; i++)
 		global.unitOptions[i] = [];
 	global.unitOptions[Units.CARRIER] = [{sprite: spr_bomber,	execute: switch_to_bomber},
 										 {sprite: spr_recon,	execute: switch_to_recon},

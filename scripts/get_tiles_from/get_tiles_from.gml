@@ -8,8 +8,6 @@ function get_tiles_from(start, maxDis, energyTo, shouldStoreDist, canMoveOnto) {
 	
 	energyTo[Tiles.others] = 100;
 	
-	//debug("energy is ", energyTo, maxDis);
-	
 	
 	if (shouldStoreDist) {
 		global.distStored = start;

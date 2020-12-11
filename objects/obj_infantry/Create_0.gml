@@ -27,6 +27,16 @@ error_limit = 3;				// how many times to flash
 error_wait = 5;					// how many frames per flash
 
 
-selectedPlaneId = -1;				// for seaplane carrierss
+storedPlaneInst = -1;			// for seaplane carrierss
+bindedPlane = -1;
+
+bindedCarrier = -1;				// for planes deployed from plane carriers
+planePath = -1;					// path for recon
+unitLockedOn = -1;				// unit locked on for bombers and fighters
+planeFinished = true;			// returning back to base
+
 formIndication = false;
 formation = -1;
+
+is_active = true;				// whether this unit is currently in game
+								// if isn't, probably used for some helper thing

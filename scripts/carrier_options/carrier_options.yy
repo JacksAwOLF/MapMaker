@@ -2,11 +2,11 @@
   "isDnD": false,
   "isCompatibility": false,
   "parent": {
-    "name": "unit_options",
-    "path": "folders/Scripts/soldier/unit_options.yy",
+    "name": "unit_scripts",
+    "path": "folders/Scripts/soldier/unit_scripts.yy",
   },
   "resourceVersion": "1.0",
-  "name": "seaplane_carrier",
+  "name": "carrier_options",
   "tags": [],
   "resourceType": "GMScript",
 }

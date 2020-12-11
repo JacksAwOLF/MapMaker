@@ -1,6 +1,6 @@
 /// @description Returns all the tiles that can be seen from the given tile & soldier
 /// @param tile_id Tile with soldier to calculate vision from
-function get_vision_tiles() {
+function get_vision_tiles(unitInst) {
 
 	// data to be stored in queue: (grid pos, leftover vision cost)
 	// calculate using proportions, estimate proportions by dividing each
@@ -9,13 +9,13 @@ function get_vision_tiles() {
 	// this will cause the "line drawn" to be jagged, so will be a rough estimate at most
 	// maybe change the # of grids to resolve some problems as well
 
-	var startx = argument[0].pos % global.mapWidth;
-	var starty = floor(argument[0].pos / global.mapWidth);
+	var startx = unitInst.tilePos.pos % global.mapWidth;
+	var starty = floor(unitInst.tilePos.pos / global.mapWidth);
 
 	var res = [];	// array of results
 	var cnt = 0;	// size of results
 	
-	var soldier_vision = argument[0].soldier.vision + 1.25*(argument[0].elevation-1);
+	var soldier_vision = unitInst.vision + 1.25*(unitInst.tilePos.elevation-1);
 	
 	
 	var range = floor(soldier_vision);
@@ -62,7 +62,7 @@ function get_vision_tiles() {
 				}
 
 				var add = 1;
-				if (argument[0].elevation < global.grid[gridid].elevation) {
+				if (unitInst.tilePos.elevation < global.grid[gridid].elevation) {
 					switch(global.grid[gridid].sprite_index) {
 						case spr_tile_flat: 
 						case spr_tile_road:

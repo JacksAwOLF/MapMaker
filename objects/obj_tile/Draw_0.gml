@@ -11,7 +11,6 @@ draw_sprite_stretched_ext(sprite_index, 0, x, y, size, size, c_white, alpha_valu
 if (road){
 	var ind = 0;
 	// up, right, down, left
-	//debug(pos, pos/global.mapWidth);
 	if (floor(pos/global.mapWidth)>0 && global.grid[pos-global.mapWidth].road) ind += 1;
 	if ((pos+1)%global.mapWidth>0 && global.grid[pos+1].road) ind += 2;
 	if (floor(pos/global.mapWidth)<global.mapHeight-1 && global.grid[pos+global.mapWidth].road) ind += 4;
@@ -136,14 +135,14 @@ if (soldier != -1 && !hide_soldier){
 	
 	// index to draw
 	var soldier_index = 0; 
-	if (global.selectedSoldier == id) soldier_index = 1;
+	if (global.selectedSoldier != -1 && global.selectedSoldier.tilePos == id) soldier_index = 1;
 	if (!(soldier.can && soldier.move_range)) soldier_index = 2;
 	
 	// formation 
 	var ccc = c_white;
 	if (soldier.formation != -1 && soldier.formation == global.selectedFormation) {
 		soldier_index = 1;
-		if (global.selectedSoldier != id)
+		if (global.selectedSoldier.tilePos != id)
 			ccc = c_aqua;
 	}
 	
@@ -160,6 +159,32 @@ if (soldier != -1 && !hide_soldier){
 	draw_sprite_ext(spr_index, soldier_index, xx, yy, scale_factor, scale_factor, soldier.direction, ccc, 1);				// the soldier on this tile
 	if (class < 3) draw_circle_color(x+width/4.5,y+width/3.75,width/8,global.colors[class],global.colors[class],false);
 	draw_healthbar(x, y, x+size, y+(size)/8, (soldier.my_health/soldier.max_health)*100, c_black, c_red, c_green, 0, true,false);
+	
+
+	if (soldier.unit_id == Units.CARRIER && soldier.storedPlaneInst != -1 && soldier.bindedPlane == -1) {
+		var planeName = string_char_at(global.unitNames[soldier.storedPlaneInst.unit_id],1);
+			
+		draw_rectangle_color(x+size*2/3,y+size*2/3,x+size,y+size,c_orange,c_orange,c_orange,c_orange,false);
+		draw_text(x+size*13/18,y+size*13/18,planeName);
+	}
 }
 
-
+// draw planes
+if (array_length(planeArr) > 0) {
+	var planeName = "";
+	var planeCount = 0;
+	
+	for (var i = 0; i < array_length(planeArr); i++) {
+		if (planeArr[i] != -1 && (is_my_team(planeArr[i]) || !hide_soldier)) {
+			planeName = string_char_at(global.unitNames[planeArr[i].unit_id],1);
+			planeCount += 1;
+		}
+	}
+	
+	if (planeCount > 1) 
+		planeName = string(planeCount);
+	if (planeName != "") {
+		draw_rectangle_color(x,y+size*2/3,x+size*1/3,y+size,c_orange,c_orange,c_orange,c_orange,false);
+		draw_text(x+size*1/18,y+size*13/18,planeName);
+	}
+}

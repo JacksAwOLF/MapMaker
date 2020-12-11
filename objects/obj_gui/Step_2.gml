@@ -9,7 +9,6 @@ switch(state) {
 		x = camera_get_view_width(camera) * relx + camera_get_view_x(camera);
 		y = camera_get_view_height(camera) * rely + camera_get_view_y(camera);
 
-		//debug("new x ", x, "; new y ", y, "camera x: ", camera_get_view_x(camera), "camera y: ", camera_get_view_y(camera));
 
 		image_xscale = camera_get_view_width(camera) / origw;
 		image_yscale = camera_get_view_height(camera) / origh;
