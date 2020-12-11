@@ -35,33 +35,24 @@ function possible_move_tiles_including_selected(tileId) {
 }
 
 function soldier_init_move() {
-	if (global.selectedSoldier == -1)
-		return;
+	if (global.selectedSoldier == -1) return;
+	
+	with (global.selectedSoldier){
+		var source = (argument_count > 0 ? argument[0] : tilePos);
+		move_range -= global.pathCost;
+		global.poss_moves = get_movement_tiles_at(id, source);
+		move_range += global.pathCost;
+	
+		// path point selection: handles corner case when new path can reach starting soldier pos
+		if (source != tilePos && global.dist[tilePos.pos] != -1)
+			global.poss_moves[array_length(global.poss_moves)] = tilePos;
 
-
-	// default energy values in global.energy[soldier.unit_id]
-	// default move range is in global.movement[solder.unit_id]
-
-	var source = (argument_count > 0 ? argument[0] : global.selectedSoldier.tilePos);
-
-	with(global.selectedSoldier){
-		if (can-moveCost>=0){
-			global.poss_moves = get_tiles_from(
-				source.pos, move_range-global.pathCost, global.energy[unit_id], true,
-				(is_plane(id) ? return_true : possible_move_tiles_including_selected)
-			);
-
-			if (source != tilePos && global.dist[tilePos.pos] != -1)
-				global.poss_moves[array_length(global.poss_moves)] = tilePos;
-
-			for (var i=0; i<array_length(global.poss_moves); i++)
-				global.poss_moves[i].possible_move = true;
-		}
-
-		else global.poss_moves = []
+		for (var i=0; i<array_length(global.poss_moves); i++)
+			global.poss_moves[i].possible_move = true;
+		
+		// this is the carrier popup thing i shall boldly assume
 		global.unitOptionsBar.unit_options = global.unitOptions[unit_id];
 	}
-
 }
 
 
@@ -100,67 +91,4 @@ function soldier_init_move_formation(pos){
 	global.selectedSoldier = global.grid[pos].soldier;
 
 
-
-	/* method 1
-	global.selectedSoldier = iid;
-	soldier_init_move();
-	var mw = global.mapWidth, nn = mw * global.mapHeight,
-		sumDist = array_create(nn),
-		oRow = floor(pos/global.mapWidth), oCol = pos % global.mapWidth,
-		storeFrom = array_create(nn);
-
-	for (var j=0; j<nn; j++){
-		sumDist[j] = global.dist[j];
-		storeFrom[j] = global.from[j];
-	}
-
-	for (var i=0; i<array_length(arr); i++){
-		if (arr[i] == id) continue;
-
-		global.selectedSoldier = arr[i];
-		soldier_init_move();
-
-
-
-		var foo = arr[i].pos,
-			cRow = floor(foo/mw), cCol = foo % mw;
-
-		for (var a=0; a<global.mapHeight; a++)
-		for (var b=0; b<mw; b++){
-			var ccRow  = a + (cRow-oRow), ccCol = b + (cCol - oCol);
-			if (!point_in_rectangle(ccCol, ccRow, 0, 0, mw, global.mapHeight)
-				|| sumDist[a*mw+b] == -1 ||  global.dist[ccRow*mw+ccCol] == -1){
-				sumDist[a*mw+b] = -1;
-				continue;
-			}
-			sumDist[a*mw+b] = max(sumDist[a*mw+b], global.dist[ccRow*mw+ccCol]);
-		}
-
-
-	}
-
-	erase_blocks(true)
-
-	with(obj_tile){
-		possible_move = false;
-		possible_path = false;
-		possible_pathpoint = false;
-		global.poss_moves = -1;
-		global.poss_paths = -1;
-	}
-
-	global.poss_moves = [];
-	for (var i=0; i<nn;  i++){
-		global.dist[i] = sumDist[i];
-		if  (sumDist[i]){
-			with(global.grid[i])
-				possible_move = true;
-			global.poss_moves = append(global.poss_moves, global.grid[i]);
-		}
-
-		global.from[i] = storeFrom[i];
-	}
-
-	global.selectedSoldier = iid;
-	*/
 }
